@@ -164,7 +164,7 @@ try {
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="fw-bold mb-0 text-dark">Salam, <?php echo htmlspecialchars($u_name); ?>!</h3>
+            <!-- <h3 class="fw-bold mb-0 text-dark">Salam, <?php echo htmlspecialchars($u_name); ?>!</h3> -->
             <p class="text-muted mb-0">Sistemin bugünkü vəziyyəti ilə tanış olun.</p>
         </div>
         <div class="d-flex gap-2">

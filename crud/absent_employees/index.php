@@ -168,6 +168,36 @@ include '../../includes/header.php';
         font-size: 0.9rem;
     }
 }
+
+.note-section {
+    font-size: 0.9rem;
+}
+
+.note-content {
+    background: #f8f9fa;
+    border-left: 3px solid #4361ee;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    line-height: 1.4;
+}
+
+.note-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.note-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.note-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.note-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 </style>
 
 <div class="container-fluid py-4">
@@ -317,21 +347,16 @@ include '../../includes/header.php';
                 <div class="list-group list-group-flush">
                     <?php foreach ($absent_records as $record): 
                         $status_info = $status_types[$record['status']] ?? ['label' => 'Naməlum', 'color' => 'secondary', 'icon' => 'fa-question'];
-                        $start_formatted = date('d.m.Y', strtotime($record['start_date']));
+                        $start_formatted = date('d.m', strtotime($record['start_date']));
                         $end_formatted = date('d.m.Y', strtotime($record['end_date']));
                         $total_days = (strtotime($record['end_date']) - strtotime($record['start_date'])) / (60 * 60 * 24) + 1;
+                        $note = $record['note'] ?? $record['muraciyetler'] ?? '';
                     ?>
                     <div class="list-group-item border-0 p-4 absent-card <?php echo $record['status']; ?>">
                         <div class="row align-items-center">
-                            <div class="col-md-3">
+                            <div class="col-md-2"> <!-- Kolonu 3-dən 2-ə endirdim -->
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar-sm me-3">
-                                        <?php 
-                                        $initials = mb_substr($record['employee_ad'], 0, 1, 'UTF-8') . 
-                                                   mb_substr($record['employee_soyad'], 0, 1, 'UTF-8');
-                                        echo strtoupper($initials);
-                                        ?>
-                                    </div>
+                                    
                                     <div>
                                         <h6 class="fw-bold mb-0"><?php echo htmlspecialchars($record['fullname']); ?></h6>
                                         <small class="text-muted">
@@ -342,13 +367,12 @@ include '../../includes/header.php';
                                 </div>
                             </div>
                             
-                            <div class="col-md-3">
+                            <div class="col-md-2"> <!-- Kolonu 3-dən 2-ə endirdim -->
                                 <span class="badge bg-<?php echo $status_info['color']; ?> status-badge">
                                     <i class="fas <?php echo $status_info['icon']; ?> me-1"></i>
                                     <?php echo $status_info['label']; ?>
                                 </span>
                             </div>
-                            
                             
                             <div class="col-md-2 text-center">
                                 <span class="badge bg-light text-dark day-badge">
@@ -358,6 +382,20 @@ include '../../includes/header.php';
                             </div>
                             
                             <div class="col-md-3">
+                                <!-- NOTE SÜTUNU ƏLAVƏ EDİLDİ -->
+                                <div class="note-section">
+                                    <div class="note-content small bg-light p-2 rounded" 
+                                         style="max-height: 60px; overflow-y: auto; font-size: 0.85rem;">
+                                        <?php if (!empty($note)): ?>
+                                            <?php echo nl2br(htmlspecialchars($note)); ?>
+                                        <?php else: ?>
+                                            <span class="text-muted fst-italic">Qeyd yoxdur</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- <div class="col-md-2">
                                 <div class="text-muted small">
                                     <i class="fas fa-info-circle me-1"></i>
                                     <?php if ($record['status'] == 'mezuniyyet'): ?>
@@ -368,7 +406,7 @@ include '../../includes/header.php';
                                         İş ezamiyyəti
                                     <?php endif; ?>
                                 </div>
-                            </div>
+                            </div> -->
                             
                             <div class="col-md-1 text-end">
                                 <?php if ($is_superadmin): ?>

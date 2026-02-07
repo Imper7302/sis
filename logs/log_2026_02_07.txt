@@ -3,3 +3,4 @@
 2026-02-07 19:46:50 | USER_ID: 1 | LOGIN | a.hamidova | ROLE: admin
 2026-02-07 19:50:46 - 1 - LOGOUT - a.hamidova çıxış etdi
 2026-02-07 19:51:19 | USER_ID: 1 | LOGIN | a.hamidova | ROLE: superadmin
+2026-02-07 22:29:35 - 1 - LOGOUT - a.hamidova çıxış etdi
