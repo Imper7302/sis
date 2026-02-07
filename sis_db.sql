@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Hazırlanma Vaxtı: 31 Yan, 2026 saat 19:07
+-- Hazırlanma Vaxtı: 07 Fev, 2026 saat 19:21
 -- Server versiyası: 10.4.32-MariaDB
 -- PHP Versiyası: 8.0.30
 
@@ -147,22 +147,22 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `is_active`, `password`, `role`, `created_at`, `fullname`, `last_login`) VALUES
-(1, 'a.hamidova', NULL, 1, '$2y$10$u4QJ4dBd2rShbdzSXpux6uclTnV87j/GHwHpr6L00tVJees7J76t2', 'superadmin', '2026-01-30 18:05:14', 'Aynur Həmidova', '2026-01-31 01:24:53'),
-(2, 'm.bayramov', NULL, 1, '$2y$10$4Ma/f9XJSpunEz8XyJ7dzugF5tMmIxch.Hn/sV2YofX9.kZpYp4LC', 'isci', '2026-01-30 18:24:14', 'Mikayıl Bayramov', '2026-01-31 01:24:41'),
+(1, 'a.hamidova', NULL, 1, '$2y$10$u4QJ4dBd2rShbdzSXpux6uclTnV87j/GHwHpr6L00tVJees7J76t2', 'superadmin', '2026-01-30 18:05:14', 'Aynur Həmidova', '2026-02-07 13:14:58'),
+(2, 'm.bayramov', NULL, 1, '$2y$10$4Ma/f9XJSpunEz8XyJ7dzugF5tMmIxch.Hn/sV2YofX9.kZpYp4LC', 'isci', '2026-01-30 18:24:14', 'Mikayıl Bayramov', '2026-02-02 10:15:58'),
 (3, 'x.xancanov', NULL, 1, '$2y$10$fo6sS06pc1SCBi3y4qdY4uEQizaEGa1hhI8IQOiBpmKPKPcRxUAkW', 'isci', '2026-01-30 18:30:07', 'Xanlar Xancanov', NULL),
 (4, 'n.valiyeva', NULL, 1, '$2y$10$pSN5D766dVRneddq0FFfkuoKXWFomO0yVf.LLoctk9MBRP5kWD.My', 'isci', '2026-01-30 18:30:43', 'Nailə Vəliyeva', NULL),
 (5, 'z.aliyeva', NULL, 1, '$2y$10$c0UWNiEd0vnmr.mcfoAIiOWla7EHZBoeyFL.yGIW673XyzmvLeu.i', 'isci', '2026-01-30 18:33:24', 'Zöhrə Əliyeva', NULL),
-(6, 'v.mammadzada', NULL, 1, '$2y$10$N7JZWDBZ.iFIsHHk2tGqh.bc8dPi7DmB6OcvM2vUJ7flT4IF1kq.q', 'isci', '2026-01-30 18:33:54', 'Vəfa Məmmədzadə', NULL),
-(7, 'o.tapdıqlı', NULL, 1, '$2y$10$L/AS2woTMKFDApmf9nxNVejKDaeP3U5gQckx/KQXrZMdcBqKZukia', 'isci', '2026-01-30 18:34:27', 'Orxan Tapdıqlı', NULL),
-(8, 'y.quliyeva', NULL, 1, '$2y$10$xL8jUxkS1UryEIxe9adMFuUCR2.QhVhR8z0C5uppNGJCIbq79Akgi', 'isci', '2026-01-30 18:35:01', 'Yeganə Quliyeva', NULL),
+(6, 'v.mammadzada', NULL, 1, '$2y$10$N7JZWDBZ.iFIsHHk2tGqh.bc8dPi7DmB6OcvM2vUJ7flT4IF1kq.q', 'isci', '2026-01-30 18:33:54', 'Vəfa Məmmədzadə', '2026-02-02 10:06:16'),
+(7, 'o.tapdıqlı', NULL, 1, '$2y$10$L/AS2woTMKFDApmf9nxNVejKDaeP3U5gQckx/KQXrZMdcBqKZukia', 'isci', '2026-01-30 18:34:27', 'Orxan Tapdıqlı', '2026-02-02 10:04:21'),
+(8, 'y.quliyeva', NULL, 1, '$2y$10$.PHaGb0Ehb20IN1o9ZARwebrjy89h8qZDnQZ2qUiZ8qUlEtzW4PES', 'isci', '2026-01-30 18:35:01', 'Yeganə Quliyeva', '2026-02-03 11:58:10'),
 (9, 'l.alishanova', NULL, 1, '$2y$10$9k5wG.7hNzRDuv3FaXyvdumu7cTFQKcQtBurW/3lykeVjckNcyDuy', 'isci', '2026-01-30 18:38:32', 'Lalə Əlişanova', NULL),
 (10, 'a.yaqubova', NULL, 1, '$2y$10$ozevIoC3g/zQpbth5S1Yo.V9cVdm9Ma.MFuU/Cy59D7Gjy8h0ygfy', 'isci', '2026-01-30 18:39:05', 'Aysel Yaqubova', NULL),
 (11, 'c.ukalayeva', NULL, 1, '$2y$10$yrBAYObHURcX6EvARIGBq.MrUc2lcvXsqGIQrbSM/ob5sHjT7X1gq', 'isci', '2026-01-30 18:39:44', 'Cəmilə Ukalayeva', NULL),
 (12, 'm.mammadov', NULL, 1, '$2y$10$zkZB2ETp2h5ks1xgMTMPRuhtbyrP09dMjFaZfj8SRom1l355EOcwq', 'isci', '2026-01-30 18:41:01', 'Mahir Məmmədov', NULL),
-(13, 'f.haciyeva', NULL, 1, '$2y$10$Tag/oZR/0M3THLFkivEYquaBbnAisRS0D3hxKR4fgHhVtxB8VTNcm', 'isci', '2026-01-30 18:41:30', 'Fidan Hacıyeva', NULL),
-(14, 't.xalilova', NULL, 1, '$2y$10$E.TmyygoOXUkPmyT0Xz76.fXDLXuoh4KQJuZzlnRH.RllZbMfEEl6', 'isci', '2026-01-30 18:41:57', 'Türkan Xəlilova', NULL),
-(15, 'k.abdinova', NULL, 1, '$2y$10$OH1wkk91d..70p3dcUfKcOnR7piglZOxqvxvhgv/hBK4OiPoK88Oq', 'isci', '2026-01-30 18:42:25', 'Kafiyə Abdinova', NULL),
-(16, 'm.babayev', NULL, 1, '$2y$10$/NUJoa6qmGE9bUcE8w41BOX1DKdZ3H/u2Tkch16Z.fzZOM/m0dQG2', 'isci', '2026-01-30 18:42:49', 'Murad Babayev', NULL),
+(13, 'f.haciyeva', NULL, 1, '$2y$10$kl9pDmPNlhmG4hko0Df/5O69bTHA/DYTGenSyxWM8V.KPzZCM.FYW', 'isci', '2026-01-30 18:41:30', 'Fidan Hacıyeva', '2026-02-06 17:31:16'),
+(14, 't.xalilova', NULL, 1, '$2y$10$E.TmyygoOXUkPmyT0Xz76.fXDLXuoh4KQJuZzlnRH.RllZbMfEEl6', 'isci', '2026-01-30 18:41:57', 'Türkan Xəlilova', '2026-02-06 17:51:21'),
+(15, 'k.abdinova', NULL, 1, '$2y$10$RVhAzFqq4EVjDtQW4ExtJOUUVWQwrf3ltLMfFqJfa0Pkp0fBXDUHW', 'isci', '2026-01-30 18:42:25', 'Kafiyə Abdinova', '2026-02-06 17:24:07'),
+(16, 'm.babayev', NULL, 1, '$2y$10$WeJJz/Hig9xUIvqOa/W9lulUY/7FB1GXtx/KAgjGoFqmGfodLgKJy', 'isci', '2026-01-30 18:42:49', 'Murad Babayev', '2026-02-06 17:31:55'),
 (17, 'r.samadov', NULL, 1, '$2y$10$i7V.xSozZ6a/iIJsBqJA2OVRyZHUaPvZSY2P64Y498o96k0Le8T/y', 'isci', '2026-01-30 18:43:16', 'Rəşad Səmədov', NULL),
 (18, 'sabina.aliyeva', NULL, 1, '$2y$10$cfVgBexPT88YwgIG/EgPYOWFH1P314jf7nozTRouq3pFTl5oatJb.', 'superadmin', '2026-01-30 18:44:03', 'Səbinə Əliyeva', NULL);
 
@@ -193,6 +193,16 @@ CREATE TABLE `weekly_works` (
   `status` enum('is_rejim','mezuniyyet','xestelik','ezamiyyet') DEFAULT 'is_rejim',
   `qiymetlendirme_id` tinyint(3) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Sxemi çıxarılan cedvel `weekly_works`
+--
+
+INSERT INTO `weekly_works` (`id`, `employee_id`, `start_date`, `end_date`, `worked_days`, `veten_muraciyet`, `teskilat_muraciyet`, `sorqu`, `imtina`, `arayish`, `geri_qaytarilan`, `imtina_gulhuseyn`, `imtina_aynur`, `imtina_adil`, `tesekkur`, `created_at`, `updated_at`, `status`, `qiymetlendirme_id`) VALUES
+(1, 13, '2026-02-02', '2026-02-06', 5, 36, 2, 18, 5, 8, 3, 0, 0, 0, 0, '2026-02-06 13:02:23', '2026-02-06 13:02:23', 'is_rejim', NULL),
+(2, 15, '2026-02-02', '2026-02-06', 5, 30, 6, 11, 5, 7, 1, 0, 1, 1, 0, '2026-02-06 13:28:39', '2026-02-06 13:28:39', 'is_rejim', NULL),
+(3, 16, '2026-02-02', '2026-02-06', 5, 4, 2, 1, 0, 1, 0, 0, 1, 0, 0, '2026-02-06 13:46:59', '2026-02-06 13:46:59', 'is_rejim', NULL),
+(4, 14, '2026-02-02', '2026-02-06', 5, 29, 0, 14, 3, 10, 4, 0, 0, 0, 0, '2026-02-06 14:05:37', '2026-02-06 14:05:37', 'is_rejim', NULL);
 
 --
 -- Indexes for dumped tables
@@ -279,7 +289,7 @@ ALTER TABLE `users`
 -- Cədvəl üçün AUTO_INCREMENT `weekly_works`
 --
 ALTER TABLE `weekly_works`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

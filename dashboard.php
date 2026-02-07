@@ -389,8 +389,7 @@ try {
                         <label class="form-label small fw-bold">İşçi Seçin</label>
                         <select class="form-select" name="employee_id" required>
                             <?php 
-                            // Aktiv işçilərin siyahısı (Reminder-də olanlar)
-                            $reminders->data_seek(0); // Query-ni başa qaytarırıq
+                            $reminders->data_seek(0);
                             while($rem = $reminders->fetch_assoc()): 
                             ?>
                             <option value="<?php echo $rem['id']; ?>"><?php echo $rem['ad'].' '.$rem['soyad']; ?></option>
@@ -403,7 +402,12 @@ try {
                             <option value="mezuniyyet">Məzuniyyət</option>
                             <option value="xestelik">Xəstəlik</option>
                             <option value="ezamiyyet">Ezamiyyət</option>
+                            <option value="is_rejim">İş Rejimi Xaric</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Qeyd (İstəyə bağlı)</label>
+                        <textarea class="form-control" name="reason" rows="2" placeholder="Əlavə qeyd..."></textarea>
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -415,6 +419,7 @@ try {
                             <input type="date" class="form-control" name="end_date" value="<?php echo date('Y-m-d', strtotime('sunday this week')); ?>" required>
                         </div>
                     </div>
+                    <!-- worked_days həmişə 0 olacaq -->
                     <input type="hidden" name="worked_days" value="0">
                     <input type="hidden" name="qiymetlendirme_id" value="">
                 </div>
@@ -427,7 +432,6 @@ try {
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // Dəyişəni əvvəlcədən elan edirik
 let absenceModal;
@@ -455,25 +459,28 @@ function openAbsenceModal(employeeId) {
     absenceModal.show();
 }
 
-// Formun göndərilməsi (API-yə qoşulma)
+// Form göndərilməsi
 document.getElementById('absenceForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const fd = new FormData(this);
     
-    // API-nin gözlədiyi digər sütunları 0 olaraq doldururuq
-    const zeroFields = ['veten_muraciyet', 'teskilat_muraciyet', 'sorqu', 'imtina', 'arayish', 'geri_qaytarilan', 'imtina_gulhuseyn', 'imtina_aynur', 'imtina_adil', 'tesekkur'];
-    zeroFields.forEach(f => fd.append(f, 0));
+    const formData = new FormData(this);
     
-    fetch('crud/weekly_works/api_create.php', {
+    // YENİ API endpoint-ə göndər
+    fetch('crud/weekly_works/api_create_absence.php', {
         method: 'POST',
-        body: fd
+        body: formData
     })
     .then(res => res.json())
     .then(data => {
         if(data.success) {
+            // Modalı bağla
+            const modal = bootstrap.Modal.getInstance(document.getElementById('absenceModal'));
+            modal.hide();
+            
+            // Yenilə və bildiriş göster
             location.reload();
         } else {
-            alert('Xəta: ' + data.message);
+            alert('Xəta: ' + (data.message || data.errors?.join(', ') || 'Bilinməyən xəta'));
         }
     })
     .catch(err => {

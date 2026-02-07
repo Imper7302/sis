@@ -94,6 +94,11 @@ if (isset($_SESSION['user_id'])) {
                 <i class="fas fa-sitemap"></i> Struktur
             </a>
         </li>
+        <li>
+            <a href="/sis/crud/absent_employees/index.php" class="<?php echo ($current_page == 'index.php' && $current_dir == 'sector-vezife') ? 'active' : ''; ?>">
+                <i class="fas fa-sitemap"></i> İşdə olmayanlar
+            </a>
+        </li>
         <?php endif; ?>
 
         <li>

@@ -143,7 +143,185 @@ foreach ($employees as $emp) {
 include '../../includes/header.php';
 ?>
 
-<link rel="stylesheet" href="../../assets/css/weekly_w_in.css">
+<style>
+    /* ƏSAS CƏDVƏL STİLLƏRİ - INLINE VERSİYA */
+    .table-compact {
+        font-size: 0.75rem;
+        table-layout: auto;
+        width: 100%;
+        margin-bottom: 0 !important;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    /* Başlıq sətiri */
+    .table-compact thead th {
+        padding: 6px 3px !important;
+        vertical-align: middle !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: sticky;
+        top: 0;
+        background-color: #f8f9fa;
+        z-index: 10;
+    }
+
+    /* Gövdə sətirləri */
+    .table-compact tbody td {
+        padding: 5px 3px !important;
+        font-size: 0.8rem !important;
+        vertical-align: middle !important;
+        line-height: 1.2;
+        height: 45px;
+    }
+
+    /* # SÜTUNU - SİRA NÖMRƏSİ */
+    .table-compact th:nth-child(1),
+    .table-compact td:nth-child(1) {
+        width: 45px !important;
+        min-width: 45px !important;
+        max-width: 45px !important;
+        text-align: center;
+        padding: 3px !important;
+    }
+
+    /* İŞÇİ SÜTUNU */
+    .table-compact th:nth-child(2),
+    .table-compact td:nth-child(2) {
+        width: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+        white-space: normal;
+        word-break: break-word;
+        font-size: 0.75rem;
+        line-height: 1.1;
+        padding: 4px !important;
+    }
+
+    .table-compact td:nth-child(2) .employee-name {
+        font-size: 0.8rem !important;
+        font-weight: 500 !important;
+        line-height: 1.1;
+        margin: 0;
+    }
+
+    /* HƏFTƏ SÜTUNU */
+    .table-compact th:nth-child(3),
+    .table-compact td:nth-child(3) {
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+        white-space: normal;
+        word-break: break-word;
+        font-size: 0.75rem;
+        line-height: 1.1;
+        padding: 4px !important;
+    }
+
+    /* RƏQƏM SÜTUNLARI */
+    .table-compact th:nth-child(n+4):nth-child(-n+14) {
+        width: 55px !important;
+        min-width: 55px !important;
+        max-width: 55px !important;
+        padding: 4px 2px !important;
+    }
+
+    .table-compact td:nth-child(n+4):nth-child(-n+14) {
+        width: 55px !important;
+        min-width: 55px !important;
+        max-width: 55px !important;
+        text-align: center;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        padding: 6px 2px !important;
+        background-color: #f8f9fa !important;
+        border-left: 1px solid #dee2e6;
+        border-right: 1px solid #dee2e6;
+    }
+
+    /* Xüsusi rənglər */
+    .table-compact td:nth-child(4) { background-color: #e9ecef !important; font-weight: 800 !important; color: #495057 !important; }
+    .table-compact td:nth-child(5) { color: #0d6efd !important; background-color: #f0f7ff !important; }
+    .table-compact td:nth-child(6) { color: #198754 !important; background-color: #f0fff4 !important; }
+    .table-compact td:nth-child(10) { color: #dc3545 !important; background-color: #fff0f0 !important; }
+
+    /* Qiymət sütunu */
+    .table-compact th:nth-child(15),
+    .table-compact td:nth-child(15) {
+        width: 80px !important;
+        min-width: 80px !important;
+        max-width: 80px !important;
+        padding: 4px 2px !important;
+        text-align: center;
+    }
+
+    /* Əməliyyat sütunu */
+    .table-compact th:nth-child(16),
+    .table-compact td:nth-child(16) {
+        width: 95px !important;
+        min-width: 95px !important;
+        max-width: 95px !important;
+        padding: 4px 2px !important;
+        text-align: center;
+    }
+
+    /* Rəqəmləri böyük et */
+    .numeric-value {
+        font-size: 0.95rem !important;
+        font-weight: 800 !important;
+        color: #212529 !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Qiymət badge */
+    .table-compact .qiymet-badge {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.4rem !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 75px;
+        display: inline-block;
+        border-radius: 4px;
+    }
+
+    /* Cədvəl hover */
+    .table-hover tbody tr:hover {
+        background-color: rgba(13, 110, 253, 0.05) !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+        .table-compact td:nth-child(n+4):nth-child(-n+14) {
+            font-size: 0.85rem !important;
+        }
+        .table-compact th:nth-child(2),
+        .table-compact td:nth-child(2) {
+            width: 100px !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .table-compact { font-size: 0.65rem; }
+        .table-compact tbody td { padding: 4px 2px !important; }
+        .table-compact td:nth-child(n+4):nth-child(-n+14) {
+            width: 45px !important;
+            font-size: 0.8rem !important;
+        }
+        .table-compact th:nth-child(2),
+        .table-compact td:nth-child(2) {
+            width: 80px !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .table-compact td:nth-child(n+4):nth-child(-n+14) {
+            width: 40px !important;
+            font-size: 0.75rem !important;
+        }
+    }
+</style>
 
 
 <div class="container-fluid py-4">
