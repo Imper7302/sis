@@ -1,0 +1,19 @@
+1. C?dv?lin adin d?yism?k
+RENAME TABLE messages TO message
+
+2. Bu sorgu 1-d?n 20000-? q?d?r bütün ?d?dl?ri “yaradir” (seq adli müv?qq?ti c?dv?ld?)
+v? sonra message c?dv?li il? müqayis? ed?r?k olmayan (silinmis) id-l?ri çixarir
+WITH RECURSIVE seq AS (
+  SELECT 1 AS id
+  UNION ALL
+  SELECT id + 1 FROM seq WHERE id < 20000
+)
+SELECT seq.id
+FROM seq
+LEFT JOIN message m ON seq.id = m.id
+WHERE m.id IS NULL;
+ 305
+306
+307
+308
+311

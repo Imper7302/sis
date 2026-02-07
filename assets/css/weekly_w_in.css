@@ -1,0 +1,584 @@
+/* ƏSAS CƏDVƏL STİLLƏRİ */
+.table-compact {
+    font-size: 0.75rem;
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+
+/* Başlıq sətiri */
+.table-compact thead th {
+    padding: 4px 2px !important;
+    vertical-align: middle !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Gövdə sətirləri */
+.table-compact tbody td {
+    padding: 0.3rem !important;
+    font-size: 0.85rem !important;
+    vertical-align: middle !important;
+    line-height: 1.1;
+}
+
+/* İŞÇİ SÜTUNU - ÇOX DAR */
+.table-compact th:nth-child(2),
+.table-compact td:nth-child(2) {
+    width: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 2px !important;
+}
+
+.table-compact td:nth-child(2) strong {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+}
+
+/* HƏFTƏ SÜTUNU - DAR */
+.table-compact th:nth-child(3),
+.table-compact td:nth-child(3) {
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 0.7rem;
+    line-height: 1.1;
+    padding: 2px !important;
+}
+
+.table-compact td:nth-child(3) div {
+    font-size: 0.8rem !important;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* RƏQƏM SÜTUNLARI - ENLİ VƏ BÖYÜK */
+.table-compact th:nth-child(4), /* Gün */
+.table-compact th:nth-child(5), /* Vət. */
+.table-compact th:nth-child(6), /* Təş. */
+.table-compact th:nth-child(7), /* Sor. */
+.table-compact th:nth-child(8), /* İmt. */
+.table-compact th:nth-child(9), /* Ara. */
+.table-compact th:nth-child(10), /* G.Q. */
+.table-compact th:nth-child(11), /* Təş. (təşəkkür) */
+.table-compact th:nth-child(12), /* Gül. */
+.table-compact th:nth-child(13), /* Ayn. */
+.table-compact th:nth-child(14) /* Adil */ {
+    width: 65px !important;
+    min-width: 65px !important;
+    max-width: 65px !important;
+    padding: 3px 1px !important;
+}
+
+.table-compact td:nth-child(4), /* Gün */
+.table-compact td:nth-child(5), /* Vət. */
+.table-compact td:nth-child(6), /* Təş. */
+.table-compact td:nth-child(7), /* Sor. */
+.table-compact td:nth-child(8), /* İmt. */
+.table-compact td:nth-child(9), /* Ara. */
+.table-compact td:nth-child(10), /* G.Q. */
+.table-compact td:nth-child(11), /* Təş. (təşəkkür) */
+.table-compact td:nth-child(12), /* Gül. */
+.table-compact td:nth-child(13), /* Ayn. */
+.table-compact td:nth-child(14) /* Adil */ {
+    width: 65px !important;
+    min-width: 65px !important;
+    max-width: 65px !important;
+    text-align: center;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    padding: 6px 1px !important;
+    background-color: #f8f9fa;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+}
+
+/* Xüsusi rənglər fərqli sütunlar üçün */
+.table-compact td:nth-child(4) { /* Gün sütunu */
+    background-color: #f8f9fa !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+.table-compact td:nth-child(5) { /* Vət. sütunu */
+    color: #0d6efd !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+.table-compact td:nth-child(6) { /* Təş. sütunu */
+    color: #198754 !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+.table-compact td:nth-child(10) { /* G.Q. sütunu */
+    color: #dc3545 !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+/* Qiymət sütunu */
+.table-compact th:nth-child(15),
+.table-compact td:nth-child(15) {
+    width: 70px !important;
+    min-width: 70px !important;
+    max-width: 70px !important;
+    padding: 4px 2px !important;
+}
+
+/* Əməliyyat sütunu */
+.table-compact th:nth-child(16),
+.table-compact td:nth-child(16) {
+    width: 85px !important;
+    min-width: 85px !important;
+    max-width: 85px !important;
+    padding: 4px 2px !important;
+}
+
+/* Rəqəmləri daha böyük etmək üçün */
+.numeric-value {
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #333 !important;
+}
+
+/* Qiymət badge */
+.table-compact .qiymet-badge {
+    font-size: 0.75rem !important;
+    padding: 0.15rem 0.35rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70px;
+    display: inline-block;
+}
+
+/* Təsdiqləndi yazısı */
+.table-compact .fst-italic {
+    font-size: 0.8rem !important;
+}
+
+/* Badge və düymələr */
+.table-compact .badge {
+    font-size: 0.75rem !important;
+    padding: 0.2rem 0.4rem !important;
+}
+
+.table-compact .btn-group-sm .btn {
+    padding: 0.2rem 0.4rem !important;
+    font-size: 0.75rem !important;
+}
+
+.table-compact .btn-group-sm .btn i {
+    font-size: 0.75rem !important;
+}
+
+/* AVATAR VƏ DİGƏR STİLLƏR */
+.avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #0d6efd;
+    color: white;
+}
+
+.week-info {
+    line-height: 1.2;
+}
+
+.numeric-value {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.08) !important;
+    transition: all 0.2s ease;
+}
+
+.badge.rounded-pill {
+    min-width: 40px;
+}
+
+.new-row {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { background-color: rgba(255, 193, 7, 0.1); }
+    50% { background-color: rgba(255, 193, 7, 0.2); }
+    100% { background-color: rgba(255, 193, 7, 0.1); }
+}
+
+.qiymetlendirme-select {
+    min-width: 120px;
+    font-weight: 600;
+}
+
+.qiymet-badge {
+    font-size: 0.85em;
+    padding: 4px 8px;
+}
+
+/* Başlıqlar üçün tooltip əlavə etmək */
+.table-compact th[title] {
+    cursor: help;
+    position: relative;
+}
+
+/* Rəqəm sütunları üçün mərkəzləşdirmə və yığcamlıq */
+.table-compact td.text-center {
+    min-width: 40px;
+}
+
+/* MOBİL UYGUNLUQ */
+@media (max-width: 1400px) {
+    .table-compact {
+        font-size: 0.7rem;
+    }
+    
+    .table-compact td:nth-child(4),
+    .table-compact td:nth-child(5),
+    .table-compact td:nth-child(6),
+    .table-compact td:nth-child(7),
+    .table-compact td:nth-child(8),
+    .table-compact td:nth-child(9),
+    .table-compact td:nth-child(10),
+    .table-compact td:nth-child(11),
+    .table-compact td:nth-child(12),
+    .table-compact td:nth-child(13),
+    .table-compact td:nth-child(14) {
+        font-size: 0.85rem !important;
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+    }
+    
+    .table-compact th:nth-child(2),
+    .table-compact td:nth-child(2) {
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.9em;
+    }
+    
+    .avatar-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .table-compact tbody td {
+        padding: 0.2rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .table-compact .badge {
+        font-size: 0.7rem !important;
+        padding: 0.15rem 0.3rem !important;
+    }
+    
+    .table-compact .btn-group-sm .btn {
+        padding: 0.15rem 0.3rem !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .table-compact .btn-group-sm .btn i {
+        font-size: 0.7rem !important;
+    }
+    
+    /* Tarixi daha qısa göstər */
+    .table-compact td:nth-child(3) div {
+        font-size: 0.75rem !important;
+    }
+    
+    .table-compact td:nth-child(2) strong {
+        font-size: 0.8rem !important;
+    }
+    
+    /* Qiymət badge daha kiçik */
+    .table-compact .qiymet-badge {
+        font-size: 0.7rem !important;
+        padding: 0.1rem 0.25rem !important;
+        max-width: 60px;
+    }
+    
+    .table-compact .fst-italic {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* Çox kiçik ekranlar üçün */
+@media (max-width: 576px) {
+    .table-compact tbody td {
+        padding: 0.15rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .table-compact td:nth-child(3) div {
+        font-size: 0.7rem !important;
+    }
+    
+    .table-compact td:nth-child(2) strong {
+        font-size: 0.75rem !important;
+    }
+    
+    .table-compact .qiymet-badge {
+        font-size: 0.65rem !important;
+        max-width: 50px;
+    }
+}
+
+/* Print üçün optimallaşdırma */
+@media print {
+    .table-compact {
+        font-size: 8pt;
+    }
+    
+    .table-compact td:nth-child(n+4):nth-child(-n+14) {
+        font-weight: bold !important;
+        font-size: 9pt !important;
+    }
+}
+
+/* # SÜTUNU - ÇOX DAR */
+.table-compact th:nth-child(1),
+.table-compact td:nth-child(1) {
+    width: 35px !important;
+    min-width: 35px !important;
+    max-width: 35px !important;
+    text-align: center;
+    padding: 1px !important;
+    font-size: 0.65rem;
+}
+
+/* İŞÇİ SÜTUNU - DAHA ENLİ */
+.table-compact th:nth-child(2),
+.table-compact td:nth-child(2) {
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 3px !important;
+}
+
+.table-compact td:nth-child(2) strong {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    line-height: 1.1;
+}
+
+/* HƏFTƏ SÜTUNU - DAHA ENLİ */
+.table-compact th:nth-child(3),
+.table-compact td:nth-child(3) {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 0.75rem;
+    line-height: 1.1;
+    padding: 3px !important;
+}
+
+.table-compact td:nth-child(3) div {
+    font-size: 0.8rem !important;
+    line-height: 1.2;
+    white-space: normal;
+}
+
+/* RƏQƏM SÜTUNLARI - DAHA ENLİ (75px) */
+.table-compact th:nth-child(4), /* Gün */
+.table-compact th:nth-child(5), /* Vət. */
+.table-compact th:nth-child(6), /* Təş. */
+.table-compact th:nth-child(7), /* Sor. */
+.table-compact th:nth-child(8), /* İmt. */
+.table-compact th:nth-child(9), /* Ara. */
+.table-compact th:nth-child(10), /* G.Q. */
+.table-compact th:nth-child(11), /* Təş. (təşəkkür) */
+.table-compact th:nth-child(12), /* Gül. */
+.table-compact th:nth-child(13), /* Ayn. */
+.table-compact th:nth-child(14) /* Adil */ {
+    width: 75px !important;
+    min-width: 75px !important;
+    max-width: 75px !important;
+    padding: 4px 2px !important;
+}
+
+.table-compact td:nth-child(4), /* Gün */
+.table-compact td:nth-child(5), /* Vət. */
+.table-compact td:nth-child(6), /* Təş. */
+.table-compact td:nth-child(7), /* Sor. */
+.table-compact td:nth-child(8), /* İmt. */
+.table-compact td:nth-child(9), /* Ara. */
+.table-compact td:nth-child(10), /* G.Q. */
+.table-compact td:nth-child(11), /* Təş. (təşəkkür) */
+.table-compact td:nth-child(12), /* Gül. */
+.table-compact td:nth-child(13), /* Ayn. */
+.table-compact td:nth-child(14) /* Adil */ {
+    width: 75px !important;
+    min-width: 75px !important;
+    max-width: 75px !important;
+    text-align: center;
+    font-weight: 800 !important;
+    font-size: 1.1rem !important;
+    padding: 8px 2px !important;
+    background-color: #f8f9fa;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+}
+
+/* DAHA BÖYÜK RƏQƏMLƏR */
+.numeric-value {
+    font-size: 1.15rem !important;
+    font-weight: 900 !important;
+    color: #000 !important;
+}
+
+/* Qiymət sütunu */
+.table-compact th:nth-child(15),
+.table-compact td:nth-child(15) {
+    width: 75px !important;
+    min-width: 75px !important;
+    max-width: 75px !important;
+    padding: 4px 2px !important;
+}
+
+/* Əməliyyat sütunu */
+.table-compact th:nth-child(16),
+.table-compact td:nth-child(16) {
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    padding: 4px 2px !important;
+}
+
+/* MEDIA QUERY UPDATES */
+@media (max-width: 1400px) {
+    .table-compact th:nth-child(1),
+    .table-compact td:nth-child(1) {
+        width: 30px !important;
+        min-width: 30px !important;
+        max-width: 30px !important;
+    }
+    
+    .table-compact th:nth-child(2),
+    .table-compact td:nth-child(2) {
+        width: 90px !important;
+        min-width: 90px !important;
+        max-width: 90px !important;
+    }
+    
+    .table-compact th:nth-child(3),
+    .table-compact td:nth-child(3) {
+        width: 95px !important;
+        min-width: 95px !important;
+        max-width: 95px !important;
+    }
+    
+    .table-compact td:nth-child(4),
+    .table-compact td:nth-child(5),
+    .table-compact td:nth-child(6),
+    .table-compact td:nth-child(7),
+    .table-compact td:nth-child(8),
+    .table-compact td:nth-child(9),
+    .table-compact td:nth-child(10),
+    .table-compact td:nth-child(11),
+    .table-compact td:nth-child(12),
+    .table-compact td:nth-child(13),
+    .table-compact td:nth-child(14) {
+        font-size: 1rem !important;
+        width: 70px !important;
+        min-width: 70px !important;
+        max-width: 70px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-compact th:nth-child(2),
+    .table-compact td:nth-child(2) {
+        width: 80px !important;
+        min-width: 80px !important;
+        max-width: 80px !important;
+    }
+    
+    .table-compact th:nth-child(3),
+    .table-compact td:nth-child(3) {
+        width: 85px !important;
+        min-width: 85px !important;
+        max-width: 85px !important;
+    }
+    
+    .table-compact td:nth-child(4),
+    .table-compact td:nth-child(5),
+    .table-compact td:nth-child(6),
+    .table-compact td:nth-child(7),
+    .table-compact td:nth-child(8),
+    .table-compact td:nth-child(9),
+    .table-compact td:nth-child(10),
+    .table-compact td:nth-child(11),
+    .table-compact td:nth-child(12),
+    .table-compact td:nth-child(13),
+    .table-compact td:nth-child(14) {
+        font-size: 0.95rem !important;
+        width: 65px !important;
+        min-width: 65px !important;
+        max-width: 65px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .table-compact th:nth-child(2),
+    .table-compact td:nth-child(2) {
+        width: 70px !important;
+        min-width: 70px !important;
+        max-width: 70px !important;
+    }
+    
+    .table-compact th:nth-child(3),
+    .table-compact td:nth-child(3) {
+        width: 75px !important;
+        min-width: 75px !important;
+        max-width: 75px !important;
+    }
+    
+    .table-compact td:nth-child(4),
+    .table-compact td:nth-child(5),
+    .table-compact td:nth-child(6),
+    .table-compact td:nth-child(7),
+    .table-compact td:nth-child(8),
+    .table-compact td:nth-child(9),
+    .table-compact td:nth-child(10),
+    .table-compact td:nth-child(11),
+    .table-compact td:nth-child(12),
+    .table-compact td:nth-child(13),
+    .table-compact td:nth-child(14) {
+        font-size: 0.9rem !important;
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+    }
+}

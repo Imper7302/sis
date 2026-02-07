@@ -1,0 +1,46 @@
+2026-01-29 10:03:58 - 2 - LOGIN - admin giriş etdi
+2026-01-29 10:04:24 - 2 - LOGIN - admin giriş etdi
+2026-01-29 10:29:25 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 10:29:33 - 2 - LOGIN - admin giriş etdi
+2026-01-29 10:34:09 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 10:34:17 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 10:34:49 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 10:34:55 - 2 - LOGIN - admin giriş etdi
+2026-01-29 10:35:05 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 10:35:11 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 11:02:43 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 11:03:04 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 11:14:10 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 11:14:34 - 2 - LOGIN - admin giriş etdi
+2026-01-29 12:20:23 - 1 - LOGOUT - admin çıxış etdi
+2026-01-29 12:20:33 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 12:21:13 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 12:21:25 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 12:22:46 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 12:22:53 - 2 - LOGIN - admin giriş etdi
+2026-01-29 12:33:46 - 2 - DELETE_EMPLOYEE - ID: 2, Name: Test İşçi
+2026-01-29 13:03:09 - 1 - DELETE_EMPLOYEE - ID: 3, Name: Test İşçi
+2026-01-29 17:52:01 - 1 - LOGOUT - admin çıxış etdi
+2026-01-29 17:52:09 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 17:52:43 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 17:52:50 - 2 - LOGIN - admin giriş etdi
+2026-01-29 17:53:21 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 17:53:27 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 17:53:32 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 17:53:39 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 17:55:24 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 17:55:30 - 2 - LOGIN - admin giriş etdi
+2026-01-29 18:36:54 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 18:37:02 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 18:38:45 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 18:38:50 - 2 - LOGIN - admin giriş etdi
+2026-01-29 18:42:12 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 18:42:29 - 3 - LOGIN - imper455 giriş etdi
+2026-01-29 18:50:12 - 3 - LOGOUT - imper455 çıxış etdi
+2026-01-29 18:50:21 - 2 - LOGIN - admin giriş etdi
+2026-01-29 19:01:01 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 19:01:11 - 7 - LOGIN - imper459 giriş etdi
+2026-01-29 19:01:31 - 7 - LOGOUT - imper459 çıxış etdi
+2026-01-29 19:01:37 - 2 - LOGIN - admin giriş etdi
+2026-01-29 19:09:37 - 2 - LOGOUT - admin çıxış etdi
+2026-01-29 19:12:18 | USER_ID: 2 | LOGIN | admin

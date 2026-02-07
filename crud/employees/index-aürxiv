@@ -1,0 +1,576 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// İşçilər CRUD səhifəsi
+$page_title = "İşçilər";
+
+// Auth yoxlaması
+require_once __DIR__ . '/../../includes/auth.php';
+checkAuth();
+
+// Yalnız superadmin giriş edə bilər
+if (!isSuperAdmin()) {
+    header('Location: ../../dashboard.php');
+    exit();
+}
+
+// Database connection
+require_once __DIR__ . '/../../config/database.php';
+
+// Əməliyyat dəyişənləri
+$message = '';
+$error = '';
+
+// CRUD Əməliyyatları
+
+// Ən sadə test versiyası
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_employee'])) {
+    echo "<pre>POST Data: ";
+    print_r($_POST);
+    echo "</pre>";
+    
+    $ad = $_POST['ad'];
+    $soyad = $_POST['soyad'];
+    
+    echo "Ad: $ad, Soyad: $soyad<br>";
+    
+    // Sadəcə ad və soyad ilə test
+    $sql = "INSERT INTO employees (ad, soyad, user_id, sector_id, position_id) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    
+    if ($stmt) {
+        $stmt->bind_param("ss", $ad, $soyad);
+        if ($stmt->execute()) {
+            echo "SUCCESS! ID: " . $stmt->insert_id;
+        } else {
+            echo "ERROR: " . $stmt->error;
+        }
+    } else {
+        echo "Prepare error: " . $conn->error;
+    }
+
+}
+
+// 2. Redaktə et (POST) - ƏVVƏLCƏ BUNU ŞƏRHƏ ALIN, ƏLAVƏ ET İŞLƏYƏNƏ QƏDƏR
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_employee'])) {
+    // Bu hissəni müvəqqəti şərhə alın
+    $error = "Redaktə funksiyası müvəqqəti dayandırılıb.";
+    error_log("Edit function called but temporarily disabled");
+}
+
+// 3. Sil (GET)
+if (isset($_GET['delete_id']) && is_numeric($_GET['delete_id'])) {
+    $id = intval($_GET['delete_id']);
+    
+    try {
+        // Əvvəlcə məlumatı götürək log üçün
+        $sql_select = "SELECT ad, soyad FROM employees WHERE id = ?";
+        $stmt_select = $conn->prepare($sql_select);
+        $stmt_select->bind_param("i", $id);
+        $stmt_select->execute();
+        $result = $stmt_select->get_result();
+        $deleted_data = $result->fetch_assoc();
+        $stmt_select->close();
+        
+        // Silmə əməliyyatı
+        $sql = "DELETE FROM employees WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        
+        if ($stmt->execute()) {
+            $message = "İşçi uğurla silindi!";
+            
+            // Log yaz
+            $logMessage = date('Y-m-d H:i:s') . " - " . $_SESSION['user_id'] . " - DELETE_EMPLOYEE - ID: $id, Name: " . ($deleted_data['ad'] ?? '') . " " . ($deleted_data['soyad'] ?? '') . PHP_EOL;
+            $logFile = __DIR__ . '/../../logs/log_' . date('Y_m_d') . '.txt';
+            file_put_contents($logFile, $logMessage, FILE_APPEND);
+            
+            $_SESSION['success_message'] = $message;
+            header("Location: index.php");
+            exit();
+        } else {
+            $error = "Xəta baş verdi: " . $stmt->error;
+        }
+        
+        $stmt->close();
+    } catch (Exception $e) {
+        $error = "Sistem xətası: " . $e->getMessage();
+    }
+}
+
+// Session mesajlarını yoxla
+if (isset($_SESSION['success_message'])) {
+    $message = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
+
+// İşçilərin siyahısını götür
+$employees = [];
+$sectors = [];
+$positions = [];
+$users = [];
+
+try {
+    // İşçiləri götür
+    $sql = "SELECT e.*, 
+                   s.name as sector_name,
+                   p.name as position_name,
+                   u.username as user_username
+            FROM employees e
+            LEFT JOIN sectors s ON e.sector_id = s.id
+            LEFT JOIN positions p ON e.position_id = p.id
+            LEFT JOIN users u ON e.user_id = u.id
+            ORDER BY e.ad, e.soyad";
+    
+    $result = $conn->query($sql);
+    
+    if ($result) {
+        if ($result->num_rows > 0) {
+            $employees = $result->fetch_all(MYSQLI_ASSOC);
+        }
+    } else {
+        $error = "SQL sorğusunda xəta: " . $conn->error;
+        error_log("Employees SQL Error: " . $conn->error);
+    }
+    
+    // Sektorları götür
+    $sql_sectors = "SELECT id, name FROM sectors ORDER BY name";
+    $result_sectors = $conn->query($sql_sectors);
+    if ($result_sectors) {
+        $sectors = $result_sectors->fetch_all(MYSQLI_ASSOC);
+    } else {
+        error_log("Sectors SQL Error: " . $conn->error);
+    }
+    
+    // Vəzifələri götür
+    $sql_positions = "SELECT id, name FROM positions ORDER BY name";
+    $result_positions = $conn->query($sql_positions);
+    if ($result_positions) {
+        $positions = $result_positions->fetch_all(MYSQLI_ASSOC);
+    } else {
+        error_log("Positions SQL Error: " . $conn->error);
+    }
+    
+    // İstifadəçiləri götür (hələ employee olmayan)
+    $sql_users = "SELECT id, username FROM users 
+                  WHERE role = 'isci' 
+                  AND id NOT IN (SELECT user_id FROM employees WHERE user_id IS NOT NULL)
+                  ORDER BY username";
+    $result_users = $conn->query($sql_users);
+    if ($result_users) {
+        $users = $result_users->fetch_all(MYSQLI_ASSOC);
+    } else {
+        error_log("Users SQL Error: " . $conn->error);
+    }
+    
+} catch (Exception $e) {
+    $error = "Məlumat gətirilərkən xəta: " . $e->getMessage();
+    error_log("Database Exception: " . $e->getMessage());
+}
+
+// Include header
+require_once '../../includes/header.php';
+?>
+
+
+
+<!-- HTML hissəsi əvvəlki kimi qalır, lakin əlavə debug mesajları əlavə edək -->
+<div class="container-fluid">
+    <!-- Debug Mesajları (yalnız development üçün) -->
+    <?php if (!empty($error)): ?>
+        <div class="alert alert-danger alert-custom fade-in-up">
+            <i class="fas fa-exclamation-circle me-2"></i> <?php echo $error; ?>
+        </div>
+    <?php endif; ?>
+    
+    <?php if (!empty($message)): ?>
+        <div class="alert alert-success alert-custom fade-in-up">
+            <i class="fas fa-check-circle me-2"></i> <?php echo $message; ?>
+        </div>
+    <?php endif; ?>
+    
+<!-- Başlıq və Əlavə Butonu -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-0"><i class="fas fa-users me-2"></i> İşçilər</h4>
+            <p class="text-muted mb-0">İşçilərin idarə edilməsi paneli</p>
+        </div>
+        
+        <button type="button" class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+            <i class="fas fa-plus-circle me-2"></i> Yeni İşçi Əlavə Et
+        </button>
+    </div>
+    
+    <!-- Cədvəl -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">İşçilər Siyahısı</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-custom" id="employeesTable">
+                    <thead>
+                        <tr>
+                            <th width="60">ID</th>
+                            <th width="150">Ad</th>
+                            <th width="150">Soyad</th>
+                            <th width="120">İstifadəçi adı</th>
+                            <th width="150">Sektor</th>
+                            <th width="150">Vəzifə</th>
+                            <th width="120">Qeydiyyat tarixi</th>
+                            <th width="120" class="text-end">Əməliyyat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (is_array($employees) && count($employees) > 0): ?>
+                            <?php foreach ($employees as $employee): ?>
+                                <tr>
+                                    <td><?php echo $employee['id']; ?></td>
+                                    <td>
+                                        <strong><?php echo htmlspecialchars($employee['ad']); ?></strong>
+                                    </td>
+                                    <td><?php echo htmlspecialchars($employee['soyad']); ?></td>
+                                    <td>
+                                        <?php if (!empty($employee['user_username'])): ?>
+                                            <span class="badge bg-info"><?php echo htmlspecialchars($employee['user_username']); ?></span>
+                                        <?php else: ?>
+                                            <span class="badge bg-secondary">Bağlı deyil</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($employee['sector_name'])): ?>
+                                            <?php echo htmlspecialchars($employee['sector_name']); ?>
+                                        <?php else: ?>
+                                            <span class="text-muted">—</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($employee['position_name'])): ?>
+                                            <?php echo htmlspecialchars($employee['position_name']); ?>
+                                        <?php else: ?>
+                                            <span class="text-muted">—</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo date('d.m.Y', strtotime($employee['created_at'])); ?>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <!-- Redaktə butonu -->
+                                            <button type="button" class="btn btn-warning" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#editEmployeeModal"
+                                                    onclick="editEmployee(<?php echo $employee['id']; ?>)">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            
+                                            <!-- Sil butonu -->
+                                            <a href="?delete_id=<?php echo $employee['id']; ?>" 
+                                               class="btn btn-danger"
+                                               onclick="return confirmDelete('Bu işçini silmək istədiyinizə əminsiniz?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="8" class="text-center text-muted py-4">
+                                    <i class="fas fa-users-slash fa-2x mb-3"></i><br>
+                                    Heç bir işçi tapılmadı. İlk işçini əlavə edin!
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Əlavə Modal Form -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">
+                    <i class="fas fa-plus-circle me-2"></i> Yeni İşçi Əlavə Et
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Ad -->
+                        <div class="col-md-6 mb-3">
+                            <label for="ad" class="form-label">
+                                <i class="fas fa-user me-1"></i> Ad *
+                            </label>
+                            <input type="text" class="form-control form-control-custom" 
+                                   id="ad" name="ad" required 
+                                   placeholder="İşçinin adını daxil edin">
+                        </div>
+                        
+                        <!-- Soyad -->
+                        <div class="col-md-6 mb-3">
+                            <label for="soyad" class="form-label">
+                                <i class="fas fa-user me-1"></i> Soyad *
+                            </label>
+                            <input type="text" class="form-control form-control-custom" 
+                                   id="soyad" name="soyad" required 
+                                   placeholder="İşçinin soyadını daxil edin">
+                        </div>
+                        
+                        <!-- İstifadəçi -->
+                        <div class="col-md-6 mb-3">
+                            <label for="user_id" class="form-label">
+                                <i class="fas fa-user-tie me-1"></i> İstifadəçi Hesabı
+                            </label>
+                            <select class="form-control form-control-custom" id="user_id" name="user_id">
+                                <option value="">İstifadəçi seçin (isteğe bağlı)</option>
+                                <?php foreach ($users as $user): ?>
+                                    <option value="<?php echo $user['id']; ?>">
+                                        <?php echo htmlspecialchars($user['username']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="text-muted">İşçi ilə istifadəçi hesabını birləşdirin</small>
+                        </div>
+                        
+                        <!-- Sektor -->
+                        <div class="col-md-6 mb-3">
+                            <label for="sector_id" class="form-label">
+                                <i class="fas fa-building me-1"></i> Sektor
+                            </label>
+                            <select class="form-control form-control-custom" id="sector_id" name="sector_id">
+                                <option value="">Sektor seçin (isteğe bağlı)</option>
+                                <?php foreach ($sectors as $sector): ?>
+                                    <option value="<?php echo $sector['id']; ?>">
+                                        <?php echo htmlspecialchars($sector['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <!-- Vəzifə -->
+                        <div class="col-md-6 mb-3">
+                            <label for="position_id" class="form-label">
+                                <i class="fas fa-briefcase me-1"></i> Vəzifə
+                            </label>
+                            <select class="form-control form-control-custom" id="position_id" name="position_id">
+                                <option value="">Vəzifə seçin (isteğe bağlı)</option>
+                                <?php foreach ($positions as $position): ?>
+                                    <option value="<?php echo $position['id']; ?>">
+                                        <?php echo htmlspecialchars($position['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i> Ləğv et
+                    </button>
+                    <button type="submit" name="add_employee" class="btn btn-primary-custom">
+                        <i class="fas fa-save me-1"></i> Yadda Saxla
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Redaktə Modal Form -->
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEmployeeModalLabel">
+                    <i class="fas fa-edit me-2"></i> İşçi Redaktə Et
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="">
+                <input type="hidden" id="edit_id" name="id">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Ad -->
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_ad" class="form-label">
+                                <i class="fas fa-user me-1"></i> Ad *
+                            </label>
+                            <input type="text" class="form-control form-control-custom" 
+                                   id="edit_ad" name="ad" required 
+                                   placeholder="İşçinin adını daxil edin">
+                        </div>
+                        
+                        <!-- Soyad -->
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_soyad" class="form-label">
+                                <i class="fas fa-user me-1"></i> Soyad *
+                            </label>
+                            <input type="text" class="form-control form-control-custom" 
+                                   id="edit_soyad" name="soyad" required 
+                                   placeholder="İşçinin soyadını daxil edin">
+                        </div>
+                        
+                        <!-- İstifadəçi -->
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_user_id" class="form-label">
+                                <i class="fas fa-user-tie me-1"></i> İstifadəçi Hesabı
+                            </label>
+                            <select class="form-control form-control-custom" id="edit_user_id" name="user_id">
+                                <option value="">İstifadəçi seçin (isteğe bağlı)</option>
+                                <?php 
+                                // Bütün istifadəçiləri götürək (redaktə üçün)
+                                $all_users = [];
+                                $sql_all_users = "SELECT id, username FROM users WHERE role = 'isci' ORDER BY username";
+                                $result_all_users = $conn->query($sql_all_users);
+                                if ($result_all_users) {
+                                    $all_users = $result_all_users->fetch_all(MYSQLI_ASSOC);
+                                }
+                                ?>
+                                <?php foreach ($all_users as $user): ?>
+                                    <option value="<?php echo $user['id']; ?>">
+                                        <?php echo htmlspecialchars($user['username']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="text-muted">İşçi ilə istifadəçi hesabını birləşdirin</small>
+                        </div>
+                        
+                        <!-- Sektor -->
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_sector_id" class="form-label">
+                                <i class="fas fa-building me-1"></i> Sektor
+                            </label>
+                            <select class="form-control form-control-custom" id="edit_sector_id" name="sector_id">
+                                <option value="">Sektor seçin (isteğe bağlı)</option>
+                                <?php foreach ($sectors as $sector): ?>
+                                    <option value="<?php echo $sector['id']; ?>">
+                                        <?php echo htmlspecialchars($sector['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <!-- Vəzifə -->
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_position_id" class="form-label">
+                                <i class="fas fa-briefcase me-1"></i> Vəzifə
+                            </label>
+                            <select class="form-control form-control-custom" id="edit_position_id" name="position_id">
+                                <option value="">Vəzifə seçin (isteğe bağlı)</option>
+                                <?php foreach ($positions as $position): ?>
+                                    <option value="<?php echo $position['id']; ?>">
+                                        <?php echo htmlspecialchars($position['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i> Ləğv et
+                    </button>
+                    <button type="submit" name="edit_employee" class="btn btn-primary-custom">
+                        <i class="fas fa-save me-1"></i> Yadda Saxla
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+// DataTables ilə bağlı problemi həll etmək üçün
+document.addEventListener('DOMContentLoaded', function() {
+    // DataTables-i yalnız cədvəldə məlumat varsa başlat
+    const table = document.getElementById('employeesTable');
+    const tbody = table.querySelector('tbody');
+    
+    // Həqiqi məlumatların olub olmadığını yoxla
+    const hasRealData = Array.from(tbody.querySelectorAll('tr')).some(tr => 
+        !tr.textContent.includes('Heç bir işçi tapılmadı')
+    );
+    
+    if (hasRealData) {
+        // DataTables init
+        $('#employeesTable').DataTable({
+            language: {
+                "emptyTable": "Cədvəldə heç bir məlumat yoxdur",
+                "info": "Toplam _TOTAL_ qeyddən _START_ - _END_ arası göstərilir",
+                "infoEmpty": "Heç bir qeyd yoxdur",
+                "infoFiltered": "(_MAX_ qeyd arasından seçilib)",
+                "lengthMenu": "Göstər _MENU_ qeyd",
+                "loadingRecords": "Yüklənir...",
+                "processing": "Gözləyin...",
+                "search": "Axtarış:",
+                "zeroRecords": "Heç bir uyğun qeyd tapılmadı",
+                "paginate": {
+                    "first": "İlk",
+                    "last": "Son",
+                    "next": "Növbəti",
+                    "previous": "Əvvəlki"
+                }
+            },
+            pageLength: 10,
+            responsive: true,
+            columnDefs: [
+                { orderable: false, targets: [7] } // Əməliyyat sütununu sıralanmaz et
+            ],
+            order: [[0, 'desc']] // ID sütununa görə azalan sıra
+        });
+    }
+});
+
+// Edit funksiyası
+function editEmployee(id) {
+    // AJAX ilə məlumatları gətir
+    fetch(`../../api/get_employee.php?id=${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                const employee = data.data;
+                
+                // Modal inputları doldur
+                document.getElementById('edit_id').value = employee.id;
+                document.getElementById('edit_ad').value = employee.ad;
+                document.getElementById('edit_soyad').value = employee.soyad;
+                document.getElementById('edit_user_id').value = employee.user_id || '';
+                document.getElementById('edit_sector_id').value = employee.sector_id || '';
+                document.getElementById('edit_position_id').value = employee.position_id || '';
+                
+                // Modalı aç
+                const editModal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
+                editModal.show();
+            } else {
+                alert('Məlumat gətirilərkən xəta baş verdi: ' + (data.message || 'Bilinməyən xəta'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Xəta baş verdi: ' + error.message);
+        });
+}
+
+// Confirm funksiyası
+function confirmDelete(message) {
+    return confirm(message || 'Bu əməliyyatı təsdiqləyirsiniz?');
+}
+</script>
+
+<?php
+// Include footer
+require_once '../../includes/footer.php';
+?>

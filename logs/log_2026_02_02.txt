@@ -1,0 +1,9 @@
+2026-02-02 06:28:51 - 2 - LOGOUT - admin çıxış etdi
+2026-02-02 06:28:59 | USER_ID: 1 | LOGIN | a.hamidova | ROLE: superadmin
+2026-02-02 07:00:39 | USER_ID: 1 | LOGIN | a.hamidova | ROLE: superadmin
+2026-02-02 07:04:21 | USER_ID: 7 | LOGIN | o.tapdıqlı | ROLE: isci
+2026-02-02 07:06:16 | USER_ID: 6 | LOGIN | v.mammadzada | ROLE: isci
+2026-02-02 07:15:58 | USER_ID: 2 | LOGIN | m.bayramov | ROLE: isci
+2026-02-02 11:37:11 - 2 - LOGOUT - m.bayramov çıxış etdi
+2026-02-02 11:37:37 | USER_ID: 1 | LOGIN | a.hamidova | ROLE: superadmin
+2026-02-02 11:38:34 - 1 - LOGOUT - a.hamidova çıxış etdi
